@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Penjelasan lengkap teknologi Internet of Things (IoT): arsitektur, komponen, dan penerapannya">
+  <meta name="keywords" content="IoT, Internet of Things, sensor, mikrokontroler, teknologi">
+  <title>Teknologi IoT — IoTWorld</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Cousine:wght@400;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #f5f4f1;
+      color: #2d2d2d;
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    a { color: #1a6fbf; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      background: #fff;
+      border-bottom: 2px solid #ddd;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      position: sticky;
+      top: 0;
+      z-index: 99;
+    }
+
+    .brand { font-weight: 800; font-size: 1.1rem; color: #1a6fbf; }
+    .brand span { color: #333; }
+    .nav-links { list-style: none; display: flex; gap: 0.2rem; }
+
+    .nav-links a {
+      color: #555;
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 0.32rem 0.8rem;
+      border-radius: 5px;
+      transition: background 0.12s;
+    }
+
+    .nav-links a:hover, .nav-links a.aktif {
+      background: #eef4fb;
+      color: #1a6fbf;
+      text-decoration: none;
+    }
+
+    /* PAGE HEADER */
+    .page-top {
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      padding: 2.5rem 2rem;
+    }
+
+    .page-top-in {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .breadcrumb {
+      font-size: 0.8rem;
+      color: #aaa;
+      margin-bottom: 0.5rem;
+    }
+
+    .breadcrumb a { color: #1a6fbf; }
+
+    .page-top h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #1a1a1a;
+      margin-bottom: 0.4rem;
+    }
+
+    .page-top h1 span { color: #1a6fbf; }
+
+    .page-top p {
+      font-size: 0.94rem;
+      color: #666;
+      max-width: 540px;
+    }
+
+    /* LAYOUT */
+    .layout {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    @media (max-width: 700px) { .layout { grid-template-columns: 1fr; } }
+
+    /* MAIN */
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #1a1a1a;
+      border-bottom: 2px solid #e0dbd3;
+      padding-bottom: 0.35rem;
+      margin-bottom: 0.9rem;
+    }
+
+    h2 span { color: #1a6fbf; }
+
+    h3 {
+      font-size: 0.97rem;
+      font-weight: 700;
+      color: #222;
+      margin: 1.2rem 0 0.35rem;
+    }
+
+    p { font-size: 0.93rem; color: #444; margin-bottom: 0.85rem; }
+    strong { color: #1a1a1a; }
+    em { color: #1a6fbf; font-style: italic; }
+    hr { border: none; border-top: 1px solid #e0dbd3; margin: 2.2rem 0; }
+
+    figure { margin: 1.5rem 0; text-align: center; }
+    figure img {
+      max-width: 600px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      display: block;
+      margin: 0 auto;
+    }
+    figcaption { font-size: 0.78rem; color: #999; margin-top: 0.4rem; font-style: italic; }
+
+    /* LISTS */
+    ul.daftar, ol.langkah {
+      padding-left: 1.3rem;
+      margin: 0.5rem 0 1rem;
+    }
+
+    ul.daftar li, ol.langkah li {
+      font-size: 0.93rem;
+      color: #444;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid #f0ede8;
+      line-height: 1.55;
+    }
+
+    ul.daftar li:last-child, ol.langkah li:last-child { border-bottom: none; }
+    ul.daftar li::marker { color: #1a6fbf; }
+    ol.langkah li::marker { color: #1a6fbf; font-weight: 700; }
+
+    /* APPLY GRID */
+    .apply {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .apply-item {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 7px;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.83rem;
+      color: #444;
+      transition: box-shadow 0.13s;
+    }
+
+    .apply-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+    .apply-ikon { font-size: 1.5rem; margin-bottom: 0.4rem; }
+
+    /* SIDEBAR */
+    .sidebar-box {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1.3rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .sidebar-box h4 {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #1a6fbf;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.9rem;
+    }
+
+    .row-info {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.35rem 0;
+      border-bottom: 1px solid #f0ede8;
+      font-size: 0.85rem;
+    }
+
+    .row-info:last-child { border-bottom: none; }
+    .ri-name { color: #444; }
+    .ri-val { color: #1a6fbf; font-family: 'Cousine', monospace; font-size: 0.8rem; }
+
+    .tag-wrap { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+    .tag {
+      background: #eef4fb;
+      color: #1a6fbf;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+    }
+
+    .sidebar-list { list-style: none; }
+
+    .sidebar-list li {
+      font-size: 0.85rem;
+      color: #555;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid #f0ede8;
+    }
+
+    .sidebar-list li:last-child { border-bottom: none; }
+    .sidebar-list li::before { content: '→ '; color: #1a6fbf; }
+
+    footer {
+      background: #fff;
+      border-top: 2px solid #ddd;
+      padding: 1.6rem 2rem;
+      text-align: center;
+    }
+
+    .f-nav { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 0.6rem; }
+    .f-nav a { font-size: 0.84rem; color: #888; }
+    footer p { font-size: 0.8rem; color: #bbb; margin: 0; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">IoT<span>World</span></div>
+  <ul class="nav-links">
+    <li><a href="index.html">Beranda</a></li>
+    <li><a href="teknologi.html" class="aktif">Teknologi</a></li>
+    <li><a href="data-sensor.html">Data Sensor</a></li>
+    <li><a href="kontak.html">Kontak Kami</a></li>
+  </ul>
+</nav>
+
+<div class="page-top">
+  <div class="page-top-in">
+    <div class="breadcrumb"><a href="index.html">Beranda </a> &rsaquo; Teknologi</div>
+    <h1>Teknologi <span>Internet of Things</span></h1>
+    <p>Panduan lengkap memahami arsitektur, komponen, protokol komunikasi, dan penerapan Internet of Things di kehidupan nyata.</p>
+  </div>
+</div>
+
+<div class="layout">
+  <main>
+
+    <h2>Arsitektur <span>Internet of Things</span></h2>
+    <p>
+      Sistem Internet of Things dibangun di atas arsitektur berlapis. <strong>Empat lapisan utama</strong> bekerja
+      secara berurutan untuk memastikan data mengalir dari sensor fisik hingga ke tangan pengguna.
+    </p>
+
+    <figure>
+      <img
+        src="image/arsitektur_iot.png"
+        alt="Arsitektur berlapis Internet of Things"
+      >
+      <figcaption>Gambar 2 — Arsitektur IoT: dari perangkat sensor di lapangan hingga aplikasi pengguna akhir</figcaption>
+    </figure>
+
+    <p>
+      Pada lapisan terbawah terdapat <em>perception layer</em> — sensor dan aktuator yang berinteraksi
+      langsung dengan dunia fisik. Data kemudian diteruskan melalui <em>network layer</em> menggunakan
+      berbagai protokol komunikasi menuju platform pengolahan di cloud.
+    </p>
+
+    <hr>
+
+    <h2>Komponen Sistem <span>Internet of Things</span></h2>
+
+    <h3>Hardware yang Digunakan</h3>
+    <ul class="daftar">
+      <li>Mikrokontroler seperti Arduino, ESP32, dan Raspberry Pi</li>
+      <li>Sensor suhu, kelembaban, cahaya, tekanan, dan gerak</li>
+      <li>Modul komunikasi WiFi, Bluetooth, LoRa, dan Zigbee</li>
+      <li>Aktuator — relay, motor servo, dan solenoid valve</li>
+      <li>Power supply dan sistem manajemen baterai</li>
+      <li>Gateway IoT sebagai jembatan ke internet</li>
+    </ul>
+
+    <h3>Alur Kerja Data IoT</h3>
+    <ol class="langkah">
+      <li><strong>Pengumpulan Data</strong> — Sensor membaca kondisi fisik secara berkala</li>
+      <li><strong>Transmisi</strong> — Data dikirim via protokol komunikasi ke gateway</li>
+      <li><strong>Pre-processing</strong> — Gateway memfilter dan mengompres data</li>
+      <li><strong>Upload ke Cloud</strong> — Data dikirim ke platform IoT (AWS IoT, Azure IoT Hub)</li>
+      <li><strong>Analitik & AI</strong> — Sistem memproses data untuk deteksi anomali dan prediksi</li>
+      <li><strong>Visualisasi & Aksi</strong> — Dashboard menampilkan hasil, sistem merespons otomatis</li>
+    </ol>
+
+    <hr>
+
+    <h2>Manfaat <span>Internet of Things</span></h2>
+    <p>Implementasi IoT memberikan dampak nyata di berbagai sektor kehidupan:</p>
+
+    <ul class="daftar">
+      <li><strong>Efisiensi Energi</strong> — Pemantauan real-time mengurangi pemborosan energi hingga 30%</li>
+      <li><strong>Keamanan Lebih Baik</strong> — Sensor dan kamera cerdas bekerja secara otomatis</li>
+      <li><strong>Predictive Maintenance</strong> — Kerusakan mesin dapat diprediksi sebelum terjadi</li>
+      <li><strong>Produktivitas Tinggi</strong> — Otomatisasi tugas repetitif membebaskan SDM untuk pekerjaan kreatif</li>
+      <li><strong>Kualitas Hidup</strong> — Smart home, wearable health monitor, dan kota pintar</li>
+    </ul>
+
+    <hr>
+
+    <h2>Penerapan <span>Nyata</span></h2>
+    <p>Internet of Things sudah diterapkan luas di berbagai sektor kehidupan, dari rumah tangga hingga industri berat.</p>
+
+    <figure>
+      <img
+      src="https://cdn.everythingrf.com/live/skyworks_iot_original.png"
+        alt="Penerapan Internet of Things di berbagai bidang"
+      >
+      <figcaption>Gambar 3 — Berbagai penerapan Internet of Things: dari Smart Home hingga Smart City</figcaption>
+    </figure>
+
+    <div class="apply">
+      <div class="apply-item"><div class="apply-ikon">🏠</div>Smart Home</div>
+      <div class="apply-item"><div class="apply-ikon">🏭</div>Industri (IIoT)</div>
+      <div class="apply-item"><div class="apply-ikon">🌾</div>Pertanian Presisi</div>
+      <div class="apply-item"><div class="apply-ikon">🏥</div>Kesehatan</div>
+      <div class="apply-item"><div class="apply-ikon">🚗</div>Transportasi</div>
+      <div class="apply-item"><div class="apply-ikon">🏙️</div>Smart City</div>
+    </div>
+
+  </main>
+
+  <aside>
+    <div class="sidebar-box">
+      <h4>Protokol Komunikasi</h4>
+      <div class="row-info"><span class="ri-name">WiFi 802.11</span><span class="ri-val">2.4 / 5 GHz</span></div>
+      <div class="row-info"><span class="ri-name">Bluetooth LE</span><span class="ri-val">2.4 GHz</span></div>
+      <div class="row-info"><span class="ri-name">Zigbee</span><span class="ri-val">2.4 GHz</span></div>
+      <div class="row-info"><span class="ri-name">LoRaWAN</span><span class="ri-val">915 MHz</span></div>
+      <div class="row-info"><span class="ri-name">NB-IoT</span><span class="ri-val">700 MHz</span></div>
+      <div class="row-info"><span class="ri-name">5G mMTC</span><span class="ri-val">Sub-6 GHz</span></div>
+    </div>
+
+    <div class="sidebar-box">
+      <h4>Teknologi Terkait</h4>
+      <div class="tag-wrap">
+        <span class="tag">AI / ML</span>
+        <span class="tag">Cloud</span>
+        <span class="tag">Edge</span>
+        <span class="tag">5G</span>
+        <span class="tag">Big Data</span>
+        <span class="tag">Blockchain</span>
+        <span class="tag">Digital Twin</span>
+        <span class="tag">AR / VR</span>
+      </div>
+    </div>
+
+    <div class="sidebar-box">
+      <h4>Platform IoT</h4>
+      <ul class="sidebar-list">
+        <li>AWS IoT Core</li>
+        <li>Azure IoT Hub</li>
+        <li>Google Cloud IoT</li>
+        <li>IBM Watson IoT</li>
+        <li>Thingsboard</li>
+      </ul>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="f-nav">
+    <a href="index.html">Home</a>
+    <a href="teknologi.html">Teknologi</a>
+    <a href="data-sensor.html">Data Sensor</a>
+    <a href="kontak.html">Kontak Kami</a>
+  </div>
+  <p>&copy; 2026 IoTWorld &mdash; Tugas Pemrograman Web Franskia Muji Irsadianto 4A TO (2415344015)</p>
+</footer>
+
+</body>
+</html>
